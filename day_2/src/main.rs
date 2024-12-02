@@ -2,33 +2,18 @@ use utils::read_input_d2;
 
 fn main() {
     let data = read_input_d2("../data/input_d2.txt");
-    let safe_result = count_safe_lines(data.clone());
-    let safe_result_dampener = count_safe_lines_dampener(data);
+    let safe_count = count_safe_lines(data.clone(), is_safe);
+    let dampened_safe_count = count_safe_lines(data.clone(), is_safe_dampener);
 
-    println!("safe reports: {}", safe_result);
-    println!("safe reports with dampener: {}", safe_result_dampener);
+    println!("safe reports: {}", safe_count);
+    println!("safe reports with dampener: {}", dampened_safe_count);
 }
 
-fn count_safe_lines(data: Vec<Vec<i32>>) -> i32 {
-    let mut result = 0;
-    for line in data.iter() {
-        if is_safe(&line) {
-            result += 1;
-        }
-    }
-
-    result
-}
-
-fn count_safe_lines_dampener(data: Vec<Vec<i32>>) -> i32 {
-    let mut result = 0;
-    for line in data.iter() {
-        if is_safe_dampener(&line) {
-            result += 1;
-        }
-    }
-
-    result
+fn count_safe_lines<F>(data: Vec<Vec<i32>>, is_safe_fn: F) -> i32
+where
+    F: Fn(&[i32]) -> bool,
+{
+    data.iter().filter(|line| is_safe_fn(line)).count() as i32
 }
 
 fn is_safe(slice: &[i32]) -> bool {
@@ -52,6 +37,7 @@ fn is_safe_dampener(slice: &[i32]) -> bool {
             }
         }
     }
+
     false
 }
 
@@ -66,6 +52,7 @@ fn is_difference_safe(slice: &[i32]) -> bool {
     let differences = slice
         .windows(2)
         .all(|w| i32::abs(w[0] - w[1]) <= 3 && i32::abs(w[0] - w[1]) > 0);
+
     differences
 }
 
@@ -152,14 +139,17 @@ mod tests {
 
     #[test]
     fn test_count_safe_lines() {
-        let got = count_safe_lines(EXAMPLE_DATA.iter().map(|v| v.to_vec()).collect());
+        let got = count_safe_lines(EXAMPLE_DATA.iter().map(|v| v.to_vec()).collect(), is_safe);
         let want = 2;
         assert_eq!(got, want);
     }
 
     #[test]
-    fn test_count_safe_lines_dampener() {
-        let got = count_safe_lines_dampener(EXAMPLE_DATA.iter().map(|v| v.to_vec()).collect());
+    fn test_count_safe_lines_with_dampener() {
+        let got = count_safe_lines(
+            EXAMPLE_DATA.iter().map(|v| v.to_vec()).collect(),
+            is_safe_dampener,
+        );
         let want = 4;
         assert_eq!(got, want);
     }
