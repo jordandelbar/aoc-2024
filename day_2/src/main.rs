@@ -18,6 +18,17 @@ fn count_safe_lines(data: Vec<Vec<i32>>) -> i32 {
     result
 }
 
+fn count_safe_lines_dampener(data: Vec<Vec<i32>>) -> i32 {
+    let mut result = 0;
+    for line in data.iter() {
+        if is_safe(&line) {
+            result += 1;
+        }
+    }
+
+    result
+}
+
 fn is_safe(slice: &[i32]) -> bool {
     is_monotonic(slice) && is_difference_safe(slice)
 }
@@ -39,6 +50,15 @@ fn is_difference_safe(slice: &[i32]) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    const EXAMPLE_DATA: &[&[i32]] = &[
+        &[7, 6, 4, 2, 1],
+        &[1, 2, 7, 8, 9],
+        &[9, 7, 6, 2, 1],
+        &[1, 3, 2, 4, 5],
+        &[8, 6, 4, 4, 1],
+        &[1, 3, 6, 7, 9],
+    ];
 
     #[derive(Debug)]
     struct TestCase {
@@ -110,18 +130,16 @@ mod tests {
 
     #[test]
     fn test_count_safe_lines() {
-        let data = vec![
-            vec![7, 6, 4, 2, 1],
-            vec![1, 2, 7, 8, 9],
-            vec![9, 7, 6, 2, 1],
-            vec![1, 3, 2, 4, 5],
-            vec![8, 6, 4, 4, 1],
-            vec![1, 3, 6, 7, 9],
-        ];
-
-        let got = count_safe_lines(data);
+        let got = count_safe_lines(EXAMPLE_DATA.iter().map(|v| v.to_vec()).collect());
         let want = 2;
         assert_eq!(got, want);
+    }
 
+
+    #[test]
+    fn test_count_safe_lines_dampener() {
+        let got = count_safe_lines_dampener(EXAMPLE_DATA.iter().map(|v| v.to_vec()).collect());
+        let want = 4;
+        assert_eq!(got, want);
     }
 }
