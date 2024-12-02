@@ -2,9 +2,11 @@ use utils::read_input_d2;
 
 fn main() {
     let data = read_input_d2("../data/input_d2.txt");
-    let result = count_safe_lines(data);
+    let safe_result = count_safe_lines(data.clone());
+    let safe_result_dampener = count_safe_lines_dampener(data);
 
-    println!("{}", result);
+    println!("safe reports: {}", safe_result);
+    println!("safe reports with dampener: {}", safe_result_dampener);
 }
 
 fn count_safe_lines(data: Vec<Vec<i32>>) -> i32 {
@@ -21,7 +23,7 @@ fn count_safe_lines(data: Vec<Vec<i32>>) -> i32 {
 fn count_safe_lines_dampener(data: Vec<Vec<i32>>) -> i32 {
     let mut result = 0;
     for line in data.iter() {
-        if is_safe(&line) {
+        if is_safe_dampener(&line) {
             result += 1;
         }
     }
@@ -31,6 +33,26 @@ fn count_safe_lines_dampener(data: Vec<Vec<i32>>) -> i32 {
 
 fn is_safe(slice: &[i32]) -> bool {
     is_monotonic(slice) && is_difference_safe(slice)
+}
+
+fn is_safe_dampener(slice: &[i32]) -> bool {
+    if is_safe(slice) {
+        return true;
+    } else {
+        for skip_index in 0..slice.len() {
+            let filtered_slide: Vec<i32> = slice
+                .iter()
+                .enumerate()
+                .filter(|&(i, _)| i != skip_index)
+                .map(|(_, &x)| x)
+                .collect();
+
+            if is_safe(&filtered_slide) {
+                return true;
+            }
+        }
+    }
+    false
 }
 
 fn is_monotonic(slice: &[i32]) -> bool {
@@ -134,7 +156,6 @@ mod tests {
         let want = 2;
         assert_eq!(got, want);
     }
-
 
     #[test]
     fn test_count_safe_lines_dampener() {
