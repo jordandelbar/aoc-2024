@@ -32,7 +32,10 @@ fn read_input(file_path: &str) -> (Vec<i32>, Vec<i32>) {
 fn compute_distance(mut a: Vec<i32>, mut b: Vec<i32>) -> i32 {
     a.sort();
     b.sort();
-    a.into_iter().zip(b).map(|(x, y)| i32::abs(x - y)).sum::<i32>()
+    a.into_iter()
+        .zip(b)
+        .map(|(x, y)| i32::abs(x - y))
+        .sum::<i32>()
 }
 
 #[cfg(test)]
@@ -49,5 +52,4 @@ mod tests {
 
         assert_eq!(got, want);
     }
-} 
-
+}
