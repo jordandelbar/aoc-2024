@@ -20,14 +20,9 @@ fn compute_distance(mut a: Vec<i32>, mut b: Vec<i32>) -> i32 {
 }
 
 fn compute_similarity_score(a: &[i32], b: &[i32]) -> i32 {
-    let mut results = vec![];
-
-    for value in a.iter() {
-        let result = b.iter().filter(|&n| *n == *value).count() as i32;
-        results.push(result * value);
-    }
-
-    results.iter().sum()
+    a.iter()
+        .map(|x| x * b.iter().filter(|&y| y == x).count() as i32)
+        .sum()
 }
 
 #[cfg(test)]
