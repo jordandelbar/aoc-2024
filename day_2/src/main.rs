@@ -2,15 +2,24 @@ use utils::read_input_d2;
 
 fn main() {
     let data = read_input_d2("../data/input_d2.txt");
-    let mut results = 0;
+    let result = count_safe_lines(data);
 
+    println!("{}", result);
+}
+
+fn count_safe_lines(data: Vec<Vec<i32>>) -> i32 {
+    let mut result = 0;
     for line in data.iter() {
-        if is_monotonic(&line) && is_difference_safe(&line) {
-            results += 1
+        if is_safe(&line) {
+            result += 1;
         }
     }
 
-    println!("{}", results);
+    result
+}
+
+fn is_safe(slice: &[i32]) -> bool {
+    is_monotonic(slice) && is_difference_safe(slice)
 }
 
 fn is_monotonic(slice: &[i32]) -> bool {
@@ -97,5 +106,22 @@ mod tests {
             let got = is_difference_safe(&case.input);
             assert_eq!(got, case.expected, "Failed for input: {:?}", case.input)
         }
+    }
+
+    #[test]
+    fn test_count_safe_lines() {
+        let data = vec![
+            vec![7, 6, 4, 2, 1],
+            vec![1, 2, 7, 8, 9],
+            vec![9, 7, 6, 2, 1],
+            vec![1, 3, 2, 4, 5],
+            vec![8, 6, 4, 4, 1],
+            vec![1, 3, 6, 7, 9],
+        ];
+
+        let got = count_safe_lines(data);
+        let want = 2;
+        assert_eq!(got, want);
+
     }
 }
