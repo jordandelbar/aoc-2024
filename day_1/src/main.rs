@@ -1,8 +1,8 @@
-use utils::read_input;
+use utils::read_input_d1;
 
 fn main() {
-    let file_path = "../data/input.txt";
-    let (vector1, vector2) = read_input(file_path);
+    let file_path = "../data/input_d1.txt";
+    let (vector1, vector2) = read_input_d1(file_path);
     let computed_distance = compute_distance(vector1.clone(), vector2.clone());
     println!("computed distance: {}", computed_distance);
 
@@ -34,10 +34,13 @@ fn compute_similarity_score(a: &[i32], b: &[i32]) -> i32 {
 mod tests {
     use super::*;
 
+    const A: [i32; 6] = [3, 4, 2, 1, 3, 3];
+    const B: [i32; 6] = [4, 3, 5, 3, 9, 3];
+
     #[test]
     fn test_compute_distance() {
-        let a = vec![3, 4, 2, 1, 3, 3];
-        let b = vec![4, 3, 5, 3, 9, 3];
+        let a = A.to_vec();
+        let b = B.to_vec();
 
         let want = 11;
         let got = compute_distance(a, b);
@@ -47,8 +50,8 @@ mod tests {
 
     #[test]
     fn test_compute_similarity_score() {
-        let a = vec![3, 4, 2, 1, 3, 3];
-        let b = vec![4, 3, 5, 3, 9, 3];
+        let a = A.to_vec();
+        let b = B.to_vec();
 
         let want = 31;
         let got = compute_similarity_score(&a, &b);
