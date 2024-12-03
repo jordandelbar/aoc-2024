@@ -9,23 +9,23 @@ fn main() {
 
 fn find_pattern(input: &str) -> i32 {
     let mut result = 0;
-    let mut active = 1;
-    let re = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)|(don\'t)|(do)").expect("Failed to compile regex");
-    for capture in re.captures_iter(input) {
-        let capture_1 = capture.get(1).map_or(0, |m| m.as_str().parse::<i32>().unwrap());
-        let capture_2 = capture.get(2).map_or(0, |m| m.as_str().parse::<i32>().unwrap());
-        let dont_value = capture.get(3).map_or("", |m| m.as_str());
-        let do_value = capture.get(4).map_or("", |m| m.as_str());
-        if !do_value.is_empty() && do_value == "do" {
-            active = 1;
-        }
-        if !dont_value.is_empty() && dont_value == "don't" {
-            active = 0;
-        }
-        if active == 1 {
-            result += capture_1 * capture_2;
+    let mut is_active = true;
+    let regex = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)|(don\'t)|(do)").expect("Failed to compile regex");
+
+    for captures in regex.captures_iter(input) {
+        if captures.get(4).is_some() {
+            is_active = true;
+        } else if captures.get(3).is_some() {
+            is_active = false;
+        } else if let (Some(m1), Some(m2)) = (captures.get(1), captures.get(2)) {
+            if is_active {
+                let num1: i32 = m1.as_str().parse().unwrap();
+                let num2: i32 = m2.as_str().parse().unwrap();
+                result += num1 * num2;
+            }
         }
     }
+
     result
 }
 
