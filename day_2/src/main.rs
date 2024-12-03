@@ -9,23 +9,23 @@ fn main() {
     println!("safe reports with dampener: {}", dampened_safe_count);
 }
 
-fn count_safe_lines<F>(data: Vec<Vec<i32>>, is_safe_fn: F) -> i32
+fn count_safe_lines<F>(data: Vec<Vec<u32>>, is_safe_fn: F) -> u32
 where
-    F: Fn(&[i32]) -> bool,
+    F: Fn(&[u32]) -> bool,
 {
-    data.iter().filter(|line| is_safe_fn(line)).count() as i32
+    data.iter().filter(|line| is_safe_fn(line)).count() as u32
 }
 
-fn is_safe(slice: &[i32]) -> bool {
+fn is_safe(slice: &[u32]) -> bool {
     is_monotonic(slice) && is_difference_safe(slice)
 }
 
-fn is_safe_dampener(slice: &[i32]) -> bool {
+fn is_safe_dampener(slice: &[u32]) -> bool {
     if is_safe(slice) {
         return true;
     } else {
         for skip_index in 0..slice.len() {
-            let filtered_slide: Vec<i32> = slice
+            let filtered_slide: Vec<u32> = slice
                 .iter()
                 .enumerate()
                 .filter(|&(i, _)| i != skip_index)
@@ -41,17 +41,17 @@ fn is_safe_dampener(slice: &[i32]) -> bool {
     false
 }
 
-fn is_monotonic(slice: &[i32]) -> bool {
+fn is_monotonic(slice: &[u32]) -> bool {
     let increasing = slice.windows(2).all(|w| w[0] <= w[1]);
     let decreasing = slice.windows(2).all(|w| w[0] >= w[1]);
 
     increasing || decreasing
 }
 
-fn is_difference_safe(slice: &[i32]) -> bool {
+fn is_difference_safe(slice: &[u32]) -> bool {
     let differences = slice
         .windows(2)
-        .all(|w| i32::abs(w[0] - w[1]) <= 3 && i32::abs(w[0] - w[1]) > 0);
+        .all(|w| u32::abs(w[0] - w[1]) <= 3 && u32::abs(w[0] - w[1]) > 0);
 
     differences
 }
@@ -60,7 +60,7 @@ fn is_difference_safe(slice: &[i32]) -> bool {
 mod tests {
     use super::*;
 
-    const EXAMPLE_DATA: &[&[i32]] = &[
+    const EXAMPLE_DATA: &[&[u32]] = &[
         &[7, 6, 4, 2, 1],
         &[1, 2, 7, 8, 9],
         &[9, 7, 6, 2, 1],
@@ -71,7 +71,7 @@ mod tests {
 
     #[derive(Debug)]
     struct TestCase {
-        input: Vec<i32>,
+        input: Vec<u32>,
         expected: bool,
     }
 

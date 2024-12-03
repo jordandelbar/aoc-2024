@@ -10,18 +10,18 @@ fn main() {
     println!("similarity score: {}", similarity_score);
 }
 
-fn compute_distance(mut a: Vec<i32>, mut b: Vec<i32>) -> i32 {
+fn compute_distance(mut a: Vec<u32>, mut b: Vec<u32>) -> u32 {
     a.sort();
     b.sort();
     a.into_iter()
         .zip(b)
-        .map(|(x, y)| i32::abs(x - y))
-        .sum::<i32>()
+        .map(|(x, y)| u32::abs(x - y))
+        .sum::<u32>()
 }
 
-fn compute_similarity_score(a: &[i32], b: &[i32]) -> i32 {
+fn compute_similarity_score(a: &[u32], b: &[u32]) -> u32 {
     a.iter()
-        .map(|x| x * b.iter().filter(|&y| y == x).count() as i32)
+        .map(|x| x * b.iter().filter(|&y| y == x).count() as u32)
         .sum()
 }
 
@@ -29,8 +29,8 @@ fn compute_similarity_score(a: &[i32], b: &[i32]) -> i32 {
 mod tests {
     use super::*;
 
-    const A: [i32; 6] = [3, 4, 2, 1, 3, 3];
-    const B: [i32; 6] = [4, 3, 5, 3, 9, 3];
+    const A: [u32; 6] = [3, 4, 2, 1, 3, 3];
+    const B: [u32; 6] = [4, 3, 5, 3, 9, 3];
 
     #[test]
     fn test_compute_distance() {
