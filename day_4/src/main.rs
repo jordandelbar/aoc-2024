@@ -3,7 +3,10 @@ use utils::read_input_d4;
 fn main() {
     let input = read_input_d4("../data/input_d4.txt");
     let sequences = look_for_xmas(&input);
-    let first_part_count = sequences.iter().filter(|seq| is_xmas(seq)).count();
+    let first_part_count = sequences
+        .iter()
+        .filter(|seq| matches!(seq.as_str(), "XMAS" | "SAMX"))
+        .count();
     println!("{}", first_part_count);
 }
 
@@ -63,24 +66,9 @@ fn extract_sequence(
     Some(sequence)
 }
 
-fn is_xmas(word: &str) -> bool {
-    match word {
-        "XMAS" => true,
-        "SAMX" => true,
-        _ => false,
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_is_xmas() {
-        assert!(is_xmas("XMAS"));
-        assert!(is_xmas("SAMX"));
-        assert!(!is_xmas("ABCD"));
-    }
 
     #[test]
     fn test_look_for_xmas() {
