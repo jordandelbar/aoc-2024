@@ -1,18 +1,15 @@
-pub fn look_for_xmas_cross(input: &Vec<Vec<char>>) -> u32 {
+pub fn count_number_xmas_cross(input: &[Vec<char>]) -> u32 {
     let mut count = 0;
 
     for row_index in 1..input.len() - 1 {
         for col_index in 1..input[row_index].len() - 1 {
             if input[row_index][col_index] == 'A' {
-                let diag_north_west = input[row_index - 1][col_index - 1];
-                let diag_south_east = input[row_index + 1][col_index + 1];
-                let diag_north_east = input[row_index - 1][col_index + 1];
-                let diag_south_west = input[row_index + 1][col_index - 1];
+                let nw = input[row_index - 1][col_index - 1];
+                let se = input[row_index + 1][col_index + 1];
+                let ne = input[row_index - 1][col_index + 1];
+                let sw = input[row_index + 1][col_index - 1];
 
-                let diag_1 = format!("{}A{}", diag_north_west, diag_south_east);
-                let diag_2 = format!("{}A{}", diag_north_east, diag_south_west);
-
-                if check_mas(&diag_1, &diag_2) {
+                if is_xmas_diag(nw, se) && is_xmas_diag(ne, sw) {
                     count += 1;
                 }
             }
@@ -22,13 +19,10 @@ pub fn look_for_xmas_cross(input: &Vec<Vec<char>>) -> u32 {
     count
 }
 
-fn check_mas(diag_1: &str, diag_2: &str) -> bool {
-    if matches!(diag_1, "MAS" | "SAM") && matches!(diag_2, "MAS" | "SAM") {
-        true
-    } else {
-        false
-    }
+fn is_xmas_diag(a: char, b: char) -> bool {
+    matches!((a, b), ('M', 'S') | ('S', 'M'))
 }
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -48,7 +42,7 @@ mod tests {
             vec!['M', 'X', 'M', 'X', 'A', 'X', 'M', 'A', 'S', 'X'],
         ];
 
-        let got = look_for_xmas_cross(matrix);
+        let got = count_number_xmas_cross(&matrix);
         let want = 9;
         assert_eq!(got, want)
     }

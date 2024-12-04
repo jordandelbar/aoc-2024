@@ -1,10 +1,11 @@
 pub fn count_number_xmas(input: &[Vec<char>]) -> usize {
-    let sequences = look_for_xmas(&input);
+    let sequences = look_for_xmas(input);
     sequences
         .iter()
         .filter(|seq| matches!(seq.as_str(), "XMAS" | "SAMX"))
         .count()
 }
+
 // look_for_xmas returns a vector of maximum 4 strings that contains
 // the next 3 characters in every direction (horizontal, vertical, diagonal)
 // if the index goes out of bound the record is discarded
@@ -64,6 +65,46 @@ fn extract_sequence(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_extract_sequence_valid() {
+        let input = vec![
+            vec!['a', 'b', 'c', 'd'],
+            vec!['e', 'f', 'g', 'h'],
+            vec!['i', 'j', 'k', 'l'],
+            vec!['m', 'n', 'o', 'p'],
+        ];
+
+        // Horizontal right
+        assert_eq!(
+            extract_sequence(&input, 0, 0, 0, 1),
+            Some("abcd".to_string())
+        );
+
+        // Vertical down
+        assert_eq!(
+            extract_sequence(&input, 0, 0, 1, 0),
+            Some("aeim".to_string())
+        );
+
+        // Diagonal down-right
+        assert_eq!(
+            extract_sequence(&input, 0, 0, 1, 1),
+            Some("afkp".to_string())
+        );
+
+        // Diagonal down-left
+        assert_eq!(
+            extract_sequence(&input, 0, 3, 1, -1),
+            Some("dgjm".to_string())
+        );
+
+        // Out of bounds horizontally
+        assert_eq!(extract_sequence(&input, 0, 1, 0, 1), None);
+
+        // Out of bounds vertically
+        assert_eq!(extract_sequence(&input, 1, 0, 1, 0), None);
+    }
 
     #[test]
     fn test_look_for_xmas() {
