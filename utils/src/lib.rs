@@ -50,3 +50,17 @@ pub fn read_input_d2(file_path: &str) -> Vec<Vec<u32>> {
 
     result
 }
+
+pub fn read_input_d4(file_path: &str) -> Vec<Vec<char>> {
+    let reader = read_file(&file_path);
+
+    let mut result = Vec::new();
+
+    for line in reader.lines() {
+        let line = line.expect("Failed to read line");
+        let chars: Vec<char> = line.chars().collect();
+        result.push(chars)
+    }
+
+    result
+}
