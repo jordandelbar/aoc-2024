@@ -27,6 +27,7 @@ fn catch_xmas(input: &Vec<Vec<char>>) -> i32 {
 fn is_xmas(word: &str) -> bool {
     match word {
         "XMAS" => true,
+        "SAMX" => true,
         _ => false,
     }
 }
@@ -37,9 +38,9 @@ mod tests {
 
     #[test]
     fn test_catch_xmas_horizontal() {
-        let input = vec![vec!['X', 'M', 'A', 'S'], vec!['X', 'M', 'B', 'D']];
+        let input = vec![vec!['X', 'M', 'A', 'S'], vec!['X', 'M', 'B', 'D'], vec!['S', 'A', 'M', 'X']];
         let got = catch_xmas(&input);
-        let want = 1;
+        let want = 2;
         assert_eq!(want, got);
     }
 }
