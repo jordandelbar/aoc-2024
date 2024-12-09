@@ -1,5 +1,3 @@
-use utils::read_file;
-
 pub fn parse_input(input: &str) -> Vec<Vec<char>> {
     input
         .lines()
