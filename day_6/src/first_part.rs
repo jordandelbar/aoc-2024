@@ -1,5 +1,7 @@
 use std::collections::HashSet;
 
+const MAX_COUNTER: u32 = 10000;
+
 #[derive(Clone, Hash, Eq, PartialEq)]
 pub struct Position {
     pub x: i32,
@@ -29,8 +31,6 @@ pub struct Guard {
 
 impl Guard {
     pub fn new(start_position: (i32, i32), start_direction: (i32, i32)) -> Self {
-        let mut visited_positions = HashSet::new();
-        let collision_spots = HashSet::new();
         let start_position = Position {
             x: start_position.0,
             y: start_position.1,
@@ -39,12 +39,12 @@ impl Guard {
             x: start_direction.0,
             y: start_direction.1,
         };
-        visited_positions.insert(start_position.clone());
+
         Self {
-            position: start_position,
+            position: start_position.clone(),
             direction: start_direction,
-            visited_positions,
-            collision_spots,
+            visited_positions: HashSet::from([start_position.clone()]),
+            collision_spots: HashSet::new(),
             infinite_loop: false,
             counter: 0,
         }
@@ -55,18 +55,25 @@ impl Guard {
             x: self.position.x + self.direction.x,
             y: self.position.y + self.direction.y,
         };
+
         if !next_position.is_within_bounds(max_bounds.0, max_bounds.1) {
             return false;
-        } else if self
+        }
+
+        if self
             .collision_spots
             .contains(&(next_position.clone(), self.direction.clone()))
         {
             self.infinite_loop = true;
             return false;
-        } else if self.counter > 10000 {
+        }
+
+        if self.counter > MAX_COUNTER {
             self.infinite_loop = true;
             return false;
-        } else if map[next_position.x as usize][next_position.y as usize] != '#'
+        }
+
+        if map[next_position.x as usize][next_position.y as usize] != '#'
             && map[next_position.x as usize][next_position.y as usize] != '0'
         {
             self.position = next_position;
