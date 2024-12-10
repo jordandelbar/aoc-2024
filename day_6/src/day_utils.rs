@@ -22,10 +22,6 @@ pub fn max_indices(map: &[Vec<char>]) -> Option<(i32, i32)> {
     Some((max_row_index as i32, max_col_index as i32))
 }
 
-pub fn is_within_bounds(position: (i32, i32), max_bounds: (i32, i32)) -> bool {
-    position.0 >= 0 && position.0 <= max_bounds.0 && position.1 >= 0 && position.1 <= max_bounds.1
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
