@@ -14,7 +14,10 @@ fn main() {
 
     // Part 1
     while guard.move_forward(&map, max_bounds) {}
-    println!("The first part answer is: {}", guard.visited_positions.len());
+    println!(
+        "The first part answer is: {}",
+        guard.visited_positions.len()
+    );
 
     // Part 2
     let second_part = second_part::process_map(map.clone());

@@ -21,7 +21,7 @@ pub fn process_map(map: Vec<Vec<char>>) -> u32 {
 
         let guard_index = crate::day_utils::find_char(&current_map, '^').unwrap();
         let mut guard = crate::first_part::Guard::new(guard_index, (-1, 0));
-        while guard.move_forward(&current_map, max_bounds) {};
+        while guard.move_forward(&current_map, max_bounds) {}
 
         if guard.infinite_loop {
             count_infinite_loop += 1;
