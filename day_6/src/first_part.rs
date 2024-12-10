@@ -12,7 +12,7 @@ pub struct Guard {
 impl Guard {
     pub fn new(start_position: (i32, i32), direction: (i32, i32)) -> Self {
         let mut visited_positions = HashSet::new();
-        let collision_spots = HashSet::new();
+        let mut collision_spots = HashSet::new();
         visited_positions.insert(start_position);
         Self {
             position: start_position,
@@ -33,7 +33,7 @@ impl Guard {
         } else if self.collision_spots.contains(&(next_position, self.direction)) {
             self.infinite_loop = true;
             return false;
-        } else if map[next_position.0 as usize][next_position.1 as usize] != '#' {
+        } else if map[next_position.0 as usize][next_position.1 as usize] != '#' && map[next_position.0 as usize][next_position.1 as usize] != '0'{
             self.position = next_position;
             self.visited_positions.insert(self.position);
         } else {

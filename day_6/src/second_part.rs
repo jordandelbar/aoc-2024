@@ -17,11 +17,8 @@ pub fn process_map(map: Vec<Vec<char>>) -> u32 {
     for (row_idx, col_idx) in dot_positions {
         let mut current_map = map.clone();
 
-        if current_map[row_idx][col_idx] == '.' {
-            current_map[row_idx][col_idx] = '0';
-        } else {
-            break
-        }
+        current_map[row_idx][col_idx] = '0';
+
         let guard_index = crate::day_utils::find_char(&current_map, '^').unwrap();
         let mut guard = crate::first_part::Guard::new(guard_index, (-1, 0));
         while guard.move_forward(&current_map, max_bounds) {};
