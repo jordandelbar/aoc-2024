@@ -1,4 +1,4 @@
-pub fn process_map(map: Vec<Vec<char>>, original_map: Vec<Vec<char>>) -> u32 {
+pub fn process_map(map: Vec<Vec<char>>) -> u32 {
     let mut count_infinite_loop: u32 = 0;
     let max_bounds = crate::day_utils::max_indices(&map).unwrap();
 
@@ -17,7 +17,11 @@ pub fn process_map(map: Vec<Vec<char>>, original_map: Vec<Vec<char>>) -> u32 {
     for (row_idx, col_idx) in dot_positions {
         let mut current_map = map.clone();
 
-        current_map[row_idx][col_idx] = '0';
+        if current_map[row_idx][col_idx] == '.' {
+            current_map[row_idx][col_idx] = '0';
+        } else {
+            break
+        }
         let guard_index = crate::day_utils::find_char(&current_map, '^').unwrap();
         let mut guard = crate::first_part::Guard::new(guard_index, (-1, 0));
         while guard.move_forward(&current_map, max_bounds) {};
