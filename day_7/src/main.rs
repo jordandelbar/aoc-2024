@@ -1,5 +1,3 @@
-mod day_utils;
-
 enum Operations {
     Addition,
     Multiplication,
@@ -22,14 +20,21 @@ fn main() {
 }
 
 fn sum_valid_targets(input: &str) -> u64 {
-    let lines: Vec<Line> = input.trim().lines().map(|x| -> Line {
-        let sides = x.split(":").collect::<Vec<&str>>();
+    let lines: Vec<Line> = input
+        .trim()
+        .lines()
+        .map(|x| -> Line {
+            let sides = x.split(":").collect::<Vec<&str>>();
 
-        Line {
-            target: sides[0].parse::<u64>().unwrap(),
-            parts: sides[1].split_whitespace().map(|x| x.parse::<u64>().unwrap()).collect()
-        }
-    }).collect();
+            Line {
+                target: sides[0].parse::<u64>().unwrap(),
+                parts: sides[1]
+                    .split_whitespace()
+                    .map(|x| x.parse::<u64>().unwrap())
+                    .collect(),
+            }
+        })
+        .collect();
 
     lines
         .into_iter()
@@ -47,7 +52,9 @@ fn apply_operation(left_number: u64, right_number: u64, operation: &Operations) 
 
 fn concat(a: u64, b: u64) -> u64 {
     let concatenated = format!("{}{}", a, b);
-    concatenated.parse::<u64>().expect("Failed to parse concatenated to i64")
+    concatenated
+        .parse::<u64>()
+        .expect("Failed to parse concatenated to i64")
 }
 
 fn generate_operator_variants(code: u64, len: usize) -> Vec<Operations> {
@@ -76,7 +83,7 @@ fn is_target_reachable(line: &Line) -> bool {
 
         let mut total = line.parts[0];
         for (j, _) in operations.iter().enumerate().take(line.parts.len() - 1) {
-            total = apply_operation(total,line.parts[j + 1], &operations[j]);
+            total = apply_operation(total, line.parts[j + 1], &operations[j]);
             if total > line.target {
                 continue 'outer;
             }
