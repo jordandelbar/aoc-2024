@@ -1,5 +1,5 @@
-use utils::read_file_to_string;
 use regex::Regex;
+use utils::read_file_to_string;
 
 fn main() {
     let input = read_file_to_string("../data/input_d3.txt").expect("Failed to read input");
@@ -22,7 +22,8 @@ fn find_pattern(input: &str) -> i32 {
 fn find_pattern_with_activation(input: &str) -> i32 {
     let mut result = 0;
     let mut is_active = true;
-    let regex = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)|(don\'t)|(do)").expect("Failed to compile regex");
+    let regex =
+        Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)|(don\'t)|(do)").expect("Failed to compile regex");
 
     for captures in regex.captures_iter(input) {
         if captures.get(4).is_some() {
@@ -55,12 +56,16 @@ mod tests {
         let test_cases = vec![
             // Example data
             TestCase {
-                input: String::from("xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"),
+                input: String::from(
+                    "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))",
+                ),
                 expected: 161,
             },
             // Too long decimal
             TestCase {
-                input: String::from("xmul(2234,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"),
+                input: String::from(
+                    "xmul(2234,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))",
+                ),
                 expected: 153,
             },
         ];
@@ -73,7 +78,9 @@ mod tests {
 
     #[test]
     fn test_find_pattern_with_activation() {
-        let input = String::from("xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))");
+        let input = String::from(
+            "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))",
+        );
         let got = find_pattern_with_activation(&input);
         let want = 48;
         assert_eq!(got, want);

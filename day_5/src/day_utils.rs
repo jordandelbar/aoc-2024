@@ -13,11 +13,7 @@ pub fn parse_input(input: &str) -> (Vec<(i32, i32)>, Vec<Vec<i32>>) {
 
     let updates = updates_section
         .lines()
-        .map(|line| {
-            line.split(',')
-                .map(|x| x.parse::<i32>().unwrap())
-                .collect()
-        })
+        .map(|line| line.split(',').map(|x| x.parse::<i32>().unwrap()).collect())
         .collect();
 
     (rules, updates)

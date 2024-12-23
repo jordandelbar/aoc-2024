@@ -1,4 +1,4 @@
-use utils::{string_to_grid, read_file_to_string};
+use utils::{read_file_to_string, string_to_grid};
 
 fn main() {
     let input_string = read_file_to_string("../data/input_d2.txt").expect("Failed to read input");

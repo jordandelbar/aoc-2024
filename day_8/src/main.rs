@@ -27,7 +27,7 @@ mod tests {
 
         let grid: Vec<Vec<char>> = string_to_grid(&input, false);
         let got = find_all_frequencies(grid);
-        let want= HashSet::from(['3', 'A']);
+        let want = HashSet::from(['3', 'A']);
 
         assert_eq!(want, got);
     }

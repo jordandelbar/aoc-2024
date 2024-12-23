@@ -1,7 +1,7 @@
 mod day_utils;
 
-use utils::*;
 use std::collections::{HashMap, HashSet, VecDeque};
+use utils::{read_file_to_string};
 
 fn main() {
     let input = read_file_to_string("../data/input_d5.txt").expect("Input not found..");
@@ -77,7 +77,10 @@ fn reorder_pages(rules: &[(u32, u32)], update: &[u32]) -> Vec<u32> {
         if let Some(neighbors) = graph.get(&page) {
             for &neighbor in neighbors {
                 if update_set.contains(&neighbor) {
-                    filtered_graph.entry(page).or_insert_with(HashSet::new).insert(neighbor);
+                    filtered_graph
+                        .entry(page)
+                        .or_insert_with(HashSet::new)
+                        .insert(neighbor);
                     *filtered_in_degree.entry(neighbor).or_insert(0) += 1;
                 }
             }

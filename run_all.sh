@@ -5,8 +5,8 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
-if [ "$1" != "run" ] && [ "$1" != "test" ] && [ "$1" != "clean" ] && [ "$1" != "clippy" ]; then
-    echo "Invalid argument. Use 'run' or 'test'."
+if [ "$1" != "run" ] && [ "$1" != "test" ] && [ "$1" != "clean" ] && [ "$1" != "clippy" ] && [ "$1" != "fmt" ]; then
+    echo "Invalid argument. Use 'run', 'test', 'clean', 'clippy' or 'fmt'."
     exit 1
 fi
 
