@@ -13,3 +13,6 @@ pub fn read_to_string(file_path: &str) -> io::Result<String> {
     Ok(contents)
 }
 
+pub fn string_to_grid(input: &str) -> Vec<Vec<char>> {
+    input.lines().map(|line| line.chars().collect()).collect()
+}

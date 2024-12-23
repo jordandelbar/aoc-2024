@@ -1,12 +1,8 @@
-use utils::read_to_string;
+use utils::{read_to_string, string_to_grid};
 fn main() {
     let input = read_to_string("../data/input_d8.txt").unwrap();
     let test = string_to_grid(&input);
     println!("Test part 1: {:?}", test);
-}
-
-fn string_to_grid(input: &str) -> Vec<Vec<char>> {
-    input.lines().map(|line| line.chars().collect()).collect()
 }
 
 #[cfg(test)]
