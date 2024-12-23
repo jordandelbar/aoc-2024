@@ -1,14 +1,12 @@
-use std::io::BufRead;
-use utils::read_file;
+use utils::read_file_to_string;
 
 pub fn read_input(file_path: &str) -> (Vec<i32>, Vec<i32>) {
     let mut vector1 = Vec::new();
     let mut vector2 = Vec::new();
 
-    let reader = read_file(&file_path);
+    let reader = read_file_to_string(file_path).unwrap();
 
     for line in reader.lines() {
-        let line = line.expect("Failed to read line");
         let numbers: Vec<&str> = line.split_whitespace().collect();
 
         if numbers.len() == 2 {

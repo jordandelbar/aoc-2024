@@ -1,7 +1,8 @@
-mod day_utils;
+use utils::{string_to_grid, read_file_to_string};
 
 fn main() {
-    let data = day_utils::read_input("../data/input_d2.txt");
+    let input_string = read_file_to_string("../data/input_d2.txt").expect("Failed to read input");
+    let data = string_to_grid(&input_string, true);
     let safe_count = count_safe_lines(data.clone(), is_safe);
     let dampened_safe_count = count_safe_lines(data.clone(), is_safe_dampener);
 

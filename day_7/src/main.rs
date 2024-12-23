@@ -12,7 +12,7 @@ struct Line {
 
 fn main() {
     let file_path = "../data/input_d7.txt";
-    let input_data = utils::read_to_string(file_path).expect("Failed to read input");
+    let input_data = utils::read_file_to_string(file_path).expect("Failed to read input");
 
     let total_sum = sum_valid_targets(&input_data);
 

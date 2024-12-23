@@ -4,7 +4,7 @@ use utils::*;
 use std::collections::{HashMap, HashSet, VecDeque};
 
 fn main() {
-    let input = read_to_string("../data/input_d5.txt").expect("Input not found..");
+    let input = read_file_to_string("../data/input_d5.txt").expect("Input not found..");
     let first_part_result = sum_middle_pages(&input);
     let second_part_result = sum_middle_pages_part_two(&input);
     println!("first part result: {}", first_part_result);

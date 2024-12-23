@@ -3,11 +3,11 @@ mod first_part;
 mod second_part;
 
 use day_utils::{find_char, max_indices};
-use utils::read_to_string;
+use utils::{read_file_to_string, string_to_grid};
 
 fn main() {
-    let input = read_to_string("../data/input_d6.txt").unwrap();
-    let map = day_utils::parse_input(&input);
+    let input = read_file_to_string("../data/input_d6.txt").unwrap();
+    let map = string_to_grid(&input, false);
     let guard_index = find_char(&map, '^').unwrap();
     let mut guard = first_part::Guard::new(guard_index, (-1, 0));
     let max_bounds = max_indices(&map).unwrap();

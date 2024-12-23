@@ -1,8 +1,8 @@
-use utils::read_to_string;
+use utils::read_file_to_string;
 use regex::Regex;
 
 fn main() {
-    let input = read_to_string("../data/input_d3.txt").expect("Failed to read input");
+    let input = read_file_to_string("../data/input_d3.txt").expect("Failed to read input");
     let result_part1 = find_pattern(&input);
     let result_part2 = find_pattern_with_activation(&input);
     println!("result for part 1: {}", result_part1);
