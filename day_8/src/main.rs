@@ -16,10 +16,16 @@ fn find_all_frequencies(grid: Vec<Vec<char>>) -> HashSet<char> {
         .collect()
 }
 
+fn count_number_antennas(grid: Vec<Vec<char>>) -> u32 {
+    grid.iter()
+    .flat_map(|line| line.iter())
+    .filter(|&&c| c == '#')
+    .count() as u32
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::collections::HashSet;
 
     #[test]
     fn test_find_all_frequencies() {
@@ -28,6 +34,17 @@ mod tests {
         let grid: Vec<Vec<char>> = string_to_grid(&input, false);
         let got = find_all_frequencies(grid);
         let want = HashSet::from(['3', 'A']);
+
+        assert_eq!(want, got);
+    }
+
+    #[test]
+    fn test_count_number_antennas() {
+        let input = "..##.......\n";
+        let grid: Vec<Vec<char>> = string_to_grid(&input, false);
+
+        let got = count_number_antennas(grid);
+        let want = 2;
 
         assert_eq!(want, got);
     }
