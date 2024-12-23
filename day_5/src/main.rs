@@ -59,7 +59,7 @@ fn is_valid_update(rules: &[(i32, i32)], update: &[i32]) -> bool {
     sorted_order == update
 }
 
-fn reorder_pages(rules: &[(u32, u32)], update: &Vec<u32>) -> Vec<u32> {
+fn reorder_pages(rules: &[(u32, u32)], update: &[u32]) -> Vec<u32> {
     let mut in_degree = HashMap::new();
     let mut graph = HashMap::new();
 
